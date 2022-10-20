@@ -1,84 +1,68 @@
-//TRIVERSING THE DOM//
-//var itemList=document.querySelector('#items');
-//parentNode
-/*console.log(itemList.parentNode);
-itemList.parentNode.style.backgroundColor ="lightgreen";
-*/
+var form = document.getElementById("addForm");
+var itemList = document.getElementById("items");
+//var filter = document.getElementById("filter");
 
-//parentElement//
-/*console.log(itemList.parentElement);
-itemList.parentElement.style.backgroundColor ="lightgreen";
-console.log(itemList.parentElement.parentElement.parentElement);
-*/
-//CHILD NODE//
-//console.log(itemList.childNodes);
-/*console.log(itemList.children);
-console.log(itemList.children[1]);
-itemList.children[1].style.backgroundColor="lightpink";
+// Form submit event
+form.addEventListener("submit", addItem);
+// Delete event
+itemList.addEventListener("click", removeItem);
+//Edit event
+itemList.addEventListener("click", editItem);
+//filter event
+//filter.addEventListener("keyup", filterItems);
 
-//First child//
-console.log(itemList.firstChild);
-//firstelementChild//
-console.log(itemList.firstElementChild);
-itemList.firstElementChild.textContent='hello';
-*/
+// Add item
+function addItem(e) {
+  e.preventDefault();
 
-/*//First child//
-console.log(itemList.lastChild);
-//firstelementChild//
-console.log(itemList.lastElementChild);
-itemList.lastElementChild.textContent='hello'
-*/
+  // Get input value
+  var newItem = document.getElementById("item").value;
 
-/*//nextSibling//
-console.log(itemList.nextSibling);
-//nextElementsibling//
-console.log(itemList.nextElementSibling);
-*/
+  // Create new li element
+  var li = document.createElement("li");
+  // Add class
+  li.className = "list-group-item";
+  // Add text node with input value
+  li.appendChild(document.createTextNode(newItem));
 
-/*//previoussibling//
-console.log(itemList.previousSibling);
-//previouseElementsibling//
-console.log(itemList.previousElementSibling);
-itemList.previousElementSibling.style.color="green";
-*/
-/*//CREAT ELEMENT//
-//creat a div
-var newDiv = document.createElement('div');
-//add class
-newDiv.className='hello';
-//add id
-newDiv.id='hello 1';
-// add attribute
-newDiv.setAttribute('title','Hello-Div');
-//create a text node
-var newDivText = document.createTextNode('Hello world');
-//add text to div
-newDiv.appendChild(newDivText);
-var container = document.querySelector('header .container');
-var h1 = document.querySelector('header h1');
+  // Create del button element
+  var deleteBtn = document.createElement("button");
+  //create edit button element
+  var editBtn = document.createElement("button");
 
-console.log(newDiv);
-container.insertBefore (newDiv, h1);
-*/
-//Now go head and add HEllo word before Item Lister//
-var subDiv = document.createElement('div');
-subDiv.className = 'HEllo';
-subDiv.setAttribute('title','sub-Div');
-var subDivText = document.createTextNode('HEllo');
-subDiv.appendChild(subDivText);
-var container1 = document.querySelector('header .container');
-var h1 = document.querySelector('header h1');
-container1.insertBefore(subDiv,h1);
-console.log(subDiv);
-//Now go head and add HEllo word before Item 1
+  // Add classes to del button
+  deleteBtn.className = "btn btn-danger btn-sm float-right delete";
 
+  //Add classes to edit button
+  editBtn.className = "btn btn-success btn-sm float-right edit";
 
-var newitem = document.createElement('li');
-newitem.className = 'hello';
-var itemText = document.createTextNode('HEllo');
-newitem.appendChild(itemText);
-var loc = document.getElementById('items');
-//var txt = document.querySelector('ul list-group');
-loc.insertBefore(newitem,loc.children[0]);
+  // Append text node
+  deleteBtn.appendChild(document.createTextNode("Delete"));
+  editBtn.appendChild(document.createTextNode("Edit"));
+
+  // Append button to li
+  li.appendChild(deleteBtn);
+  li.appendChild(editBtn);
+
+  // Append li to list
+  itemList.appendChild(li);
+}
+
+// Remove item
+function removeItem(e) {
+  if (e.target.classList.contains("delete")) {
+    if (confirm("Do you want to delete")) {
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
+  }
+}
+
+// edit item
+function editItem(e) {
+  if (e.target.classList.contains("edit")) {
+    var itemValue = e.target.value;
+    itemValue.contentEditable = true;
+  }
+}
 
