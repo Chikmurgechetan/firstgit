@@ -1,6 +1,6 @@
 var form = document.getElementById("addForm");
 var itemList = document.getElementById("items");
-//var filter = document.getElementById("filter");
+var filter = document.getElementById("filter");
 
 // Form submit event
 form.addEventListener("submit", addItem);
@@ -9,7 +9,7 @@ itemList.addEventListener("click", removeItem);
 //Edit event
 itemList.addEventListener("click", editItem);
 //filter event
-//filter.addEventListener("keyup", filterItems);
+filter.addEventListener("keyup", filterItems);
 
 // Add item
 function addItem(e) {
@@ -17,14 +17,14 @@ function addItem(e) {
 
   // Get input value
   var newItem = document.getElementById("item").value;
-
+  var description = document.getElementById('description').value;
   // Create new li element
   var li = document.createElement("li");
   // Add class
   li.className = "list-group-item";
   // Add text node with input value
   li.appendChild(document.createTextNode(newItem));
-
+  var description = document.createTextNode(description)
   // Create del button element
   var deleteBtn = document.createElement("button");
   //create edit button element
@@ -32,6 +32,7 @@ function addItem(e) {
 
   // Add classes to del button
   deleteBtn.className = "btn btn-danger btn-sm float-right delete";
+
 
   //Add classes to edit button
   editBtn.className = "btn btn-success btn-sm float-right edit";
@@ -43,7 +44,7 @@ function addItem(e) {
   // Append button to li
   li.appendChild(deleteBtn);
   li.appendChild(editBtn);
-
+  li.appendChild(description);
   // Append li to list
   itemList.appendChild(li);
 }
@@ -66,3 +67,29 @@ function editItem(e) {
   }
 }
 
+//FIlter items
+function filterItems(e)
+{
+  //convert text to lowercase
+  var text = e.target.value.toLowerCase();
+  
+  //get lis
+  var items = itemList.getElementsByTagName('li');
+  
+  //convert to an arry
+  Array.from(items).forEach(function(item){
+
+    //console.log(items);
+   var itemName = item.firstChild.textContent;
+    if(itemName.toLowerCase().indexOf(text) != -1){
+     item.style.display = 'block';
+
+
+   }else
+   {
+    item.style.display = 'none';
+    }
+
+
+  }  );
+}
