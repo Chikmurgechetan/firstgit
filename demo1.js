@@ -1,15 +1,29 @@
-//multiply of two numbers using arrow function
-var a;
- var b;
-let multpul= (a,b) =>{
-    return a*b;
 
+//Q2)using fat arrow function
+class Student{
+    constructor(name,age,marks)
+    {
+        this.name=name;
+        this.age=age;
+        this.marks=marks;
+    }
+    setPlacementAge(minPlacementAge){
+        console.log(this);
+        return (minMarks) => {
+            console.log('inside egligibleforCurrentCompany',this);
+            if(this.marks > minMarks && this.age > minPlacementAge){
+                console.log(this.name + " is ready for placement")
+            }
+            else{
+                console.log(this.name + " is not ready for placements")
+            }
+        }
+        }
 }
-console.log(multpul(2,4));
+let Tanu=new Student('Tanu',25,35);
+let Chetan=new Student('Chetan',24,50);
+ Tanu.setPlacementAge(18)(40);
+ Chetan.setPlacementAge(18)(40);
 
-//square of number using arrow function 
 
-let square=(a) => {
-    return a*a;
-}
-console.log(square(8));
+
