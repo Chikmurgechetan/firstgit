@@ -1,29 +1,25 @@
-
-//Q2)using fat arrow function
-class Student{
-    constructor(name,age,marks)
-    {
-        this.name=name;
-        this.age=age;
-        this.marks=marks;
-    }
-    setPlacementAge(minPlacementAge){
-        console.log(this);
-        return (minMarks) => {
-            console.log('inside egligibleforCurrentCompany',this);
-            if(this.marks > minMarks && this.age > minPlacementAge){
-                console.log(this.name + " is ready for placement")
-            }
-            else{
-                console.log(this.name + " is not ready for placements")
-            }
-        }
-        }
+const posts = [
+    {title:'Post One',body:'This is post one',createdAt:new Date().getTime()},
+    {title:'Post Two',body:'This is post two',createdAt:new Date().getTime()}
+];
+let intervalId;
+function getPost(){
+    
+    
 }
-let Tanu=new Student('Tanu',25,35);
-let Chetan=new Student('Chetan',24,50);
- Tanu.setPlacementAge(18)(40);
- Chetan.setPlacementAge(18)(40);
+function createPost(post,callback){
+    setTimeout(()=>{
+     posts.push({...post, createdAt:new Date().getTime()});
+     callback();
+  },2000);
 
-
-
+}
+function create4thPost(post,callback){
+    setTimeout(()=>{
+        posts.push({...post, createdAt:new Date().getTime()});
+        callback();
+    },6000)
+}
+getPost();
+createPost({title:'Post Three',body:'This is post Three'},getPost);
+create4thPost({title:'Post Four',body:'This is post Four'},getPost);
