@@ -1,64 +1,25 @@
-const posts=[
-    {title:'Post one',body:'This is post one'},
-    {title: ' Post two',body:'This is post two'}
-]
-
-function getPost(){
-    setTimeout(() =>{
-        let output = '';
-        for(let i=0; i<posts.length; i++){
-            output += `<li> ${posts[i].title}</li>`
-        }
-        document.body.innerHTML=output;
-    },1000)
-}
-function createPost(post){
-    return new Promise((resolve,reject) => {
-        setTimeout(() =>{
-            posts.push(post);
-
-            const error = false;
-
-            if(!error){
-                resolve();
-
-            }else {
-                reject('Error: Something went wrong')
-            }
-        },2000)
-    });
-}
-
-///deleting the post
-function deletepost(){
-    return new Promise((resolve,reject) => {
-        if(posts.length>0){
-            setTimeout(() =>{
-                resolve();
-            },2000)
-        }else{
-            reject('Array is Empty')
-        }
+function createPost()
+ 
+ {
+    return new Promise(() =>{
 
     });
 }
 
-setInterval(() =>{
-    deletepost().then(() =>{
-        posts.pop();
-        lastpost=document.querySelector('body').lastChild;
-        lastpost.parentNode.removeChild(lastpost)
-    })
-    .catch((err) =>{
-        console.log(err)
+const user ={
+    username : 'ck',
+    lastactivitytime:'28th of march'
+
+}
+upadtelastactivitytime ={
+
+}
+function userupdatepost()
+ {
+    Promise.all([createPost,upadtelastactivitytime])
+    .then(([createPostresolves,updatelastactivitytimeresolve]) =>{
+        console.log(updatetelastactivitytimeresolves)
 
     })
-},2000)
-
-createPost({title:'Post three',body:'This is post three'})
-.then(() =>{
-    getPost().then(() =>{
-        deletepost();
-    })
-})
-.catch(err => console.log(err))
+    .catch(err=> console.log(err))
+}
