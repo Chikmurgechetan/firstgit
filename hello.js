@@ -1,42 +1,69 @@
-console.log('person1:shows ticket');
-console.log('person2:shows ticket');
 
-const preMovie = async ()=>{
-    const promisetickets = new Promise((resolve,reject)=>{
-        setTimeout(()=>resolve('ticket'),3000)
-    });
+const posts=[
+    { title: 'Post One', body:'This is post one',createdAt:new Date() },
+    { title: 'Post Two', body:'This is post two',createdAt:new Date() }
+];
 
-    const getPopcorn = new Promise((resolve,reject)=> resolve('popcorn'))
-    const addButter = new Promise((resolve,reject)=> resolve('butter'));
-    const getcoldDrinks = new Promise((resolve,reject)=> resolve('coldDrink'))
+function getPost(){
+     setTimeout(()=>{
+        let output='';
+        posts.forEach( (post) =>{
+            output +=`<li>${post.title} </li>`
 
-    let ticket = await promisetickets;
+        });
+        document.body.innerHTML=output;
 
-    console.log(`wife: i have the ${ticket}`);
-    console.log('husband: we should go in');
-    console.log('wife: no i am hungry');
-
-    let popcorn =await getPopcorn;
-
-    console.log(`husband: i got some ${popcorn}`);
-    console.log('husband: we should go in');
-    console.log('wife: no i need butter on my popcorn');
-
-    let butter = await addButter;
-
-    console.log(`husband: i got a ${butter}`);
-    console.log('husband: any things else darling?');
-    console.log('wife: buy me a cold Drinks')
-
-    let colddrinks = await getcoldDrinks;
-
-    console.log(`husband: i got some ${colddrinks}`);
-    console.log('wife: lets go we are late');
-    console.log('husband: thanks to reminder lets go');
-
-    return ticket;
-     
+    },1000)
 }
-preMovie().then((m)=>console.log(`person3:show ${m}`));
- console.log('person4: shows ticket');
- console.log('person5: shows ticket')
+
+  function createPost(post){
+     return new Promise((resolve,reject) =>{
+        setTimeout(() => {
+            posts.push(post);
+            resolve()
+
+        }, 2000);
+     });
+
+}
+
+
+ function deletePost(){
+    return new Promise((resolve,reject)=>{
+        if(posts.length>0){
+            setTimeout(()=>{
+                resolve()
+            },4000)
+        }else{
+            reject('Array is empty now')
+        }
+
+    });
+}
+
+
+
+
+async function printpost(){
+    await getPost();
+    await createPost( { title: 'Post Three', body:'This is post three'});
+    await getPost();
+    await createPost( { title: 'Post four', body:'This is post four'});
+    await getPost();
+    await createPost( { title: 'Post five', body:'This is post five'});
+
+}
+printpost();
+
+async function deletepost(){
+
+    await setInterval(()=>{
+         posts.pop();
+         lastPost=document.querySelector('body').lastChild;
+         lastPost.parentNode.removeChild(lastPost)
+
+    },6000)
+
+}
+deletepost()
+
