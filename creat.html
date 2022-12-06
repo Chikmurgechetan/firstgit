@@ -59,15 +59,20 @@
     }
 
     window.addEventListener("DOMContentLoaded", (event) => {
-      const localStorageObj = localStorage;
-      const localstoragekeys = Object.keys(localStorageObj)
-
-      for (var i = 0; i < localstoragekeys.length; i++) {
-        const key = localstoragekeys[i]
-        const StudentDetailsString = localStorageObj[key];
-        const StudentDetailsObj = JSON.parse(StudentDetailsString);
-        shownewStudentDetailsOnScreen(StudentDetailsObj)
+     axios.get("https://crudcrud.com/api/d4063fcdd264499e9cae06c3f155ff86/StudentDetails")
+     .then((response)=>{
+      console.log(response)
+      for(var i=0;i<response.length;i++)
+      {
+        shownewStudentDetailsOnScreen(response[i])
       }
+     })
+     .catch((error)=>{
+      console.log(error)
+     })
+     
+     
+     
     })
 
     //Edit
