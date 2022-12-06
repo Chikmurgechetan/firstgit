@@ -1,87 +1,96 @@
+<html>
+
+<head>
+  <title>Student record</title>
+</head>
+
 <body>
-    <h1>Appointent App</h1><hr>
-    <form onsubmit="saveToLocalStorage(event)">
-      <label>Name</label> <br>
-      <input type="text" id="name" name="name" required/><br>
-      <label>Email Id</label><br>
-      <input type="email"  id="email" name="email" required/><br>
-      <label>Pho No</label><br>
-      <input type="phonenumber" id="phonenumber" name="phonenumber"/><br>
-      <button>Submit</button>
-      </form>
-      <ul id="listOfUsers"></ul>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.4.1/axios.min.js"></script>
-      <script>
-        function saveToLocalStorage(event){
-          event.preventDefault();
-          const name=event.target.name.value;
-          const email=event.target.email.value;
-          const phonenumber=event.target.phonenumber.value;
-          //localStorage.setItem('name',name);
-          //localStorage.setItem('email',email);
-          //localStorage.setItem('phonenumber',phonenumber);
-          const obj = {
-            name: name,
-            email: email,
-            phonenumber: phonenumber         
-          }
-          /*axios.post("https://crudcrud.com/api/9204d58c5f6f49f4bd4f8e8a8e9bbd81/userDetails",obj)
-           .then((response)=>{
-            showNewUserOnScreen(response.data)
-            console.log(response)
-           })
-           .catch((error)=>{
-            console.log(error)
-           })*/
-          //localStorage.setItem(obj.name,JSON.stringify(obj));
-          //showNewUserOnScreen(obj);
-        }
-        window.addEventListener('DOMContentLoaded', () => {
-  
-  
-  
-          const localStorageObj = localStorage;
-          const localStoragekeys = Object.keys(localStorageObj)
-  
-          for(var i=0; i<localStoragekeys.length;i++){
-            const key = localStoragekeys[i]
-            const usrDetailsString = localStorageObj[key];
-            const userDetailsObj = JSON.parse(usrDetailsString);
-            showNewUserOnScreen(userDetailsObj)
-          }
+  <h1>Student Details</h1>
+  <hr>
+  <form onsubmit="saveToLocalStorage(event)">
+    <label>Student Name:</label><br>
+    <input type="text" id="name" name="name" required /><br>
+    <label>Age:</label><br>
+    <input type="text" id="age" name="age" required /><br>
+    <label>Ph-no:</label><br>
+    <input text="text" id="Phnumber" name="Phnumber" required><br>
+    <label>Degree:</label><br>
+    <input type="text" id="degree" name="degree" required><br>
+    <button>SUbmit</button>
+  </form>
+  <ul id="Studentdetails"></ul>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.2.1/axios.min.js"></script>
+
+  <script>
+    function saveToLocalStorage(event) {
+      event.preventDefault();
+      const name = event.target.name.value;
+      const age = event.target.age.value;
+      const Phnumber = event.target.Phnumber.value;
+      const degree = event.target.degree.value;
+      // localStorage.setItem('name',name);
+      //localStorage.setItem('age',age);
+      // localStorage.setItem('phnumber',Phnumber);
+      //localStorage.setItem('degree',degree)
+      let obj = {
+        name: name,
+        age: age,
+        Phnumber: Phnumber,
+        degree: degree
+      }
+      axios.post("https://crudcrud.com/api/d4063fcdd264499e9cae06c3f155ff86/StudentDetails", obj)
+        .then((response) => {
+          shownewStudentDetailsOnScreen(response)
+          console.log(response)
         })
-        function showNewUserOnScreen(user){
-  
-          const parentNode = document.getElementById('listOfUsers');
-          const childHTML = `<li id=${user.name}> ${user.name}-${user.email}
-                          <button onclick=deleteUser('${user.name}')> Delete User </button> 
-                          <button onclick=editUserDetails('${user.name}','${user.email}','${user.phonenumber}')>Edit User</button>
-                          </li>`
-  
-          parentNode.innerHTML=parentNode.innerHTML + childHTML;
-        } 
-         function editUserDetails(name,email,phonenumber){
-          document.getElementById('name').value = name;
-          document.getElementById('email').value = email;
-          document.getElementById('phonenumber').value = phonenumber;
-  
-          deleteUser(name);
-         }     
-  
-        function deleteUser(name){
-          console.log(name);
-          localStorage.removeItem(name);
-          removeUserFromScreen(name);
-        }
-        function removeUserFromScreen(name){
-          const parentNode = document.getElementById('listOfUsers');
-          const childNodeToBeDeleted = document.getElementById(name);
-  
-          parentNode.removeChild(childNodeToBeDeleted)
-        }
-  
-  
-  
-      </script>
-  </body>
-  </html>
+        .catch((error) => {
+          console.log(error)
+        })
+      //localStorage.setItem(obj.name,JSON.stringify(obj));
+      //shownewStudentDetailsOnScreen(obj);
+    }
+    function shownewStudentDetailsOnScreen(Student) {
+      const parentNode = document.getElementById("Studentdetails");
+      const childHTML = `<li id=${Student.name}>${Student.name}-${Student.age}-${Student.Phnumber}-${Student.degree}
+                <button onclick=deleteDetails('${Student.name}')>DeleteDetails</button>
+                <button onclick=editDEtails('${Student.name}','${Student.age}','${Student.Phnumber}','${Student.degree}')>EditDetails</button>
+                </li>`
+      parentNode.innerHTML = parentNode.innerHTML + childHTML;
+    }
+
+    window.addEventListener("DOMContentLoaded", (event) => {
+      const localStorageObj = localStorage;
+      const localstoragekeys = Object.keys(localStorageObj)
+
+      for (var i = 0; i < localstoragekeys.length; i++) {
+        const key = localstoragekeys[i]
+        const StudentDetailsString = localStorageObj[key];
+        const StudentDetailsObj = JSON.parse(StudentDetailsString);
+        shownewStudentDetailsOnScreen(StudentDetailsObj)
+      }
+    })
+
+    //Edit
+    function editDEtails(name, age, Phnumber, degree) {
+      document.getElementById('name').value = name;
+      document.getElementById('age').value = age;
+      document.getElementById('Phnumber').valuse = Phnumber;
+      document.getElementById('degree').value = degree;
+
+      deleteDetails(name);
+    }
+    function deleteDetails(name) {
+      console.log(name);
+      localStorage.removeItem(name);
+      removeStudentDetailsFromScreen(name);
+    }
+    function removeStudentDetailsFromScreen(name) {
+      const parentNode = document.getElementById("Studentdetails");
+      const ChildNodeToBeDeleted = document.getElementById(name);
+      parentNode.removeChild(ChildNodeToBeDeleted);
+    }
+  </script>
+
+</body>
+
+</html>
